@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class PostgreSqlConnector {
   private Connection connection;
@@ -22,9 +21,13 @@ public class PostgreSqlConnector {
   public ResultSet execute(String sql) throws SQLException {
     connectIfNecessary();
 
-    Statement statement;
-    statement = connection.createStatement();
-    return statement.executeQuery(sql);
+    return connection.createStatement().executeQuery(sql);
+  }
+
+  public void executeUpdate(String sql) throws SQLException {
+    connectIfNecessary();
+
+    connection.createStatement().executeUpdate(sql);
   }
 
   private void connectIfNecessary() throws SQLException {
