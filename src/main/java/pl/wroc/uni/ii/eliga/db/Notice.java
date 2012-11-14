@@ -8,6 +8,7 @@ public class Notice {
 	private final Date date;
 	private final int studentId;
 	private final int teacherId;
+
 	public Notice(int id, String desc, Date date, int studentId, int teacherId) {
 		this.id = id;
 		this.desc = desc;
@@ -15,4 +16,25 @@ public class Notice {
 		this.studentId = studentId;
 		this.teacherId = teacherId;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public int getStudentId() {
+		return studentId;
+	}
+
+	public int getTeacherId() {
+		return teacherId;
+	}
+
 }
