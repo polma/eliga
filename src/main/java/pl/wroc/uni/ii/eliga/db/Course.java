@@ -12,4 +12,21 @@ public class Course {
 		this.desc = desc;
 		this.teacherId = teacherId;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public int getTeacherId() {
+		return teacherId;
+	}
+
 }

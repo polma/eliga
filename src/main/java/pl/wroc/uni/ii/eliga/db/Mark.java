@@ -10,6 +10,7 @@ public class Mark {
 	private final int studentId;
 	private final int teacherId;
 	private final int courseId;
+	
 	public Mark(int id, int value, char sign, Date date, int studentId,
 			int teacherId, int courseId) {
 		this.id = id;
@@ -20,4 +21,27 @@ public class Mark {
 		this.teacherId = teacherId;
 		this.courseId = courseId;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public int getValue() {
+		return value;
+	}
+	public char getSign() {
+		return sign;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public int getStudentId() {
+		return studentId;
+	}
+	public int getTeacherId() {
+		return teacherId;
+	}
+	public int getCourseId() {
+		return courseId;
+	}
+	
 }
