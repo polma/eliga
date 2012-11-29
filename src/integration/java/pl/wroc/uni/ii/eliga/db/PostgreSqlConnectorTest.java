@@ -8,10 +8,8 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PostgreSqlConnectorTest {
-  PostgreSqlConnector connector =
-      new PostgreSqlConnector("localhost", 5433, "postgres", "postgres", "postgres");
-
+public class PostgreSqlConnectorTest extends SqlBasicTest {
+ 
   @Before
   public void cleanUpDatabase() throws SQLException {
     connector.executeUpdate("TRUNCATE TABLE nauczyciele CASCADE");
