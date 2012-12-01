@@ -1,20 +1,13 @@
 package pl.wroc.uni.ii.eliga.db;
 
-import static org.fest.assertions.Assertions.assertThat;
+import org.junit.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.fest.assertions.Assertions.assertThat;
 
 public class PostgreSqlConnectorTest extends SqlBasicTest {
- 
-  @Before
-  public void cleanUpDatabase() throws SQLException {
-    connector.executeUpdate("TRUNCATE TABLE nauczyciele CASCADE");
-  }
-
   @Test
   public void interactsWithDatabase() throws SQLException {
     connector.executeUpdate("INSERT INTO nauczyciele VALUES (DEFAULT, 'Jan', 'Kowalsky')");

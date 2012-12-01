@@ -2,6 +2,9 @@ package pl.wroc.uni.ii.eliga.db;
 
 import java.util.Date;
 
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
+
 public class Notice {
 	private final int id;
 	private final String desc;
@@ -37,4 +40,13 @@ public class Notice {
 		return teacherId;
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        return reflectionEquals(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return reflectionHashCode(this);
+    }
 }

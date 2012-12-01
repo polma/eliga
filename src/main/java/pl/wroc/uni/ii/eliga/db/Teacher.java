@@ -1,5 +1,8 @@
 package pl.wroc.uni.ii.eliga.db;
 
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
+
 public class Teacher {
 	private final int id;
 	private final String name;
@@ -23,4 +26,13 @@ public class Teacher {
 		return surname;
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        return reflectionEquals(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return reflectionHashCode(this);
+    }
 }

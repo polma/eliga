@@ -1,11 +1,8 @@
 package pl.wroc.uni.ii.eliga.db;
 
-import static java.lang.String.format;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import static java.lang.String.format;
 
 public class PostgreSqlConnector {
   private Connection connection;
@@ -18,16 +15,21 @@ public class PostgreSqlConnector {
     url = prepareUrl(host, port, dbName);
   }
 
-  public ResultSet execute(String sql) throws SQLException {
-    connectIfNecessary();
+  public PreparedStatement prepareStatement(String sql) throws SQLException  {
+      return getConnection().prepareStatement(sql);
+  }
 
-    return connection.createStatement().executeQuery(sql);
+  public ResultSet execute(String sql) throws SQLException {
+      return getConnection().createStatement().executeQuery(sql);
   }
 
   public void executeUpdate(String sql) throws SQLException {
-    connectIfNecessary();
+      getConnection().createStatement().executeUpdate(sql);
+  }
 
-    connection.createStatement().executeUpdate(sql);
+  private Connection getConnection() throws SQLException {
+      connectIfNecessary();
+      return connection;
   }
 
   private void connectIfNecessary() throws SQLException {
