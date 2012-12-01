@@ -1,6 +1,11 @@
 package pl.wroc.uni.ii.eliga.db;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.util.Date;
+
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
 public class Mark {
   private final int id;
@@ -50,4 +55,18 @@ public class Mark {
     return courseId;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    return reflectionEquals(this, o);
+  }
+
+  @Override
+  public int hashCode() {
+    return reflectionHashCode(this);
+  }
+
+  @Override
+  public String toString() {
+    return ReflectionToStringBuilder.toString(this);
+  }
 }

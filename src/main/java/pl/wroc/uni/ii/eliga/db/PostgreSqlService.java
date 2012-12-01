@@ -15,9 +15,18 @@ public class PostgreSqlService implements DatabaseService {
   }
 
   @Override
-  public List<Mark> fetchNegativeMarksNewerThan(Date date) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Mark> fetchNegativeMarksNewerThan(Date date) throws SQLException {
+    PreparedStatement statement = connector.prepareStatement("SELECT * FROM oceny WHERE wartosc = 1 AND data > ?");
+    statement.setDate(1, new java.sql.Date(date.getTime()));
+    ResultSet result = statement.executeQuery();
+
+    List<Mark> marks = new ArrayList<Mark>();
+    while (result.next()) {
+      marks.add(new Mark(result.getInt("id"), result.getInt("wartosc"), result.getString("znak").charAt(0), result.getDate("data"),
+          result.getInt("id_ucznia"), result.getInt("id_nauczyciela"), result.getInt("id_przedmiotu")));
+    }
+
+    return marks;
   }
 
   @Override
@@ -36,31 +45,28 @@ public class PostgreSqlService implements DatabaseService {
   }
 
   @Override
-  public List<Parent> getParentsFor(Student student) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Parent> getParentsFor(Student student) throws SQLException {
+    ResultSet result = connector.execute("SELECT * FROM rodzice WHERE id_ucznia = " + student.getId());
+
+    List<Parent> parents = new ArrayList<Parent>();
+    while (result.next()) {
+      parents.add(new Parent(result.getInt("id"), result.getString("imie"), result.getString("nazwisko"),
+          result.getString("email"), result.getString("tel"), student.getId()));
+    }
+
+    return parents;
   }
 
   @Override
-  public Student getStudentFor(Notice notice) throws SQLException {
-    return getStudentById(notice.getStudentId());
-  }
-
-  @Override
-  public Student getStudentFor(Mark mark) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  private Student getStudentById(int id) throws SQLException {
+  public Student getStudentById(int id) throws SQLException {
     ResultSet result = getNonEmptyResult("SELECT * FROM uczniowie WHERE id = " + id);
     return new Student(id, result.getString("imie"), result.getString("nazwisko"), result.getString("pesel"));
   }
 
   @Override
-  public Course getCourseById(int id) {
-    // TODO Auto-generated method stub
-    return null;
+  public Course getCourseById(int id) throws SQLException {
+    ResultSet result = getNonEmptyResult("SELECT * FROM przedmioty WHERE id = " + id);
+    return new Course(id, result.getString("nazwa"), result.getString("opis"), result.getInt("id_nauczyciela"));
   }
 
   @Override
