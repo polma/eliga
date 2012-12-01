@@ -8,13 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 public class PostgreSqlService implements DatabaseService {
-    private final PostgreSqlConnector connector;
+  private final PostgreSqlConnector connector;
 
-    public PostgreSqlService(PostgreSqlConnector connector) {
-        this.connector = connector;
-    }
+  public PostgreSqlService(PostgreSqlConnector connector) {
+    this.connector = connector;
+  }
 
-    @Override
+  @Override
   public List<Mark> fetchNegativeMarksNewerThan(Date date) {
     // TODO Auto-generated method stub
     return null;
@@ -27,8 +27,9 @@ public class PostgreSqlService implements DatabaseService {
     ResultSet result = statement.executeQuery();
 
     List<Notice> notices = new ArrayList<Notice>();
-    while(result.next()) {
-        notices.add(new Notice(result.getInt("id"), result.getString("tresc"), result.getDate("data"), result.getInt("id_ucznia"), result.getInt("id_nauczyciela")));
+    while (result.next()) {
+      notices.add(new Notice(result.getInt("id"), result.getString("tresc"), result.getDate("data"), result.getInt("id_ucznia"), result
+          .getInt("id_nauczyciela")));
     }
 
     return notices;
@@ -42,7 +43,7 @@ public class PostgreSqlService implements DatabaseService {
 
   @Override
   public Student getStudentFor(Notice notice) throws SQLException {
-      return getStudentById(notice.getStudentId());
+    return getStudentById(notice.getStudentId());
   }
 
   @Override
@@ -52,8 +53,8 @@ public class PostgreSqlService implements DatabaseService {
   }
 
   private Student getStudentById(int id) throws SQLException {
-      ResultSet result = getNonEmptyResult("SELECT * FROM uczniowie WHERE id = " + id);
-      return new Student(id, result.getString("imie"), result.getString("nazwisko"), result.getString("pesel"));
+    ResultSet result = getNonEmptyResult("SELECT * FROM uczniowie WHERE id = " + id);
+    return new Student(id, result.getString("imie"), result.getString("nazwisko"), result.getString("pesel"));
   }
 
   @Override
@@ -69,10 +70,10 @@ public class PostgreSqlService implements DatabaseService {
   }
 
   private ResultSet getNonEmptyResult(String sql) throws SQLException {
-      ResultSet result = connector.execute(sql);
-      if(!result.next()) {
-          throw new SQLException("Empty result returned for SQL: " + sql);
-      }
-      return result;
+    ResultSet result = connector.execute(sql);
+    if (!result.next()) {
+      throw new SQLException("Empty result returned for SQL: " + sql);
+    }
+    return result;
   }
 }

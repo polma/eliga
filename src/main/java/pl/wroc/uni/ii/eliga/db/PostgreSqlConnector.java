@@ -15,21 +15,21 @@ public class PostgreSqlConnector {
     url = prepareUrl(host, port, dbName);
   }
 
-  public PreparedStatement prepareStatement(String sql) throws SQLException  {
-      return getConnection().prepareStatement(sql);
+  public PreparedStatement prepareStatement(String sql) throws SQLException {
+    return getConnection().prepareStatement(sql);
   }
 
   public ResultSet execute(String sql) throws SQLException {
-      return getConnection().createStatement().executeQuery(sql);
+    return getConnection().createStatement().executeQuery(sql);
   }
 
   public void executeUpdate(String sql) throws SQLException {
-      getConnection().createStatement().executeUpdate(sql);
+    getConnection().createStatement().executeUpdate(sql);
   }
 
   private Connection getConnection() throws SQLException {
-      connectIfNecessary();
-      return connection;
+    connectIfNecessary();
+    return connection;
   }
 
   private void connectIfNecessary() throws SQLException {
