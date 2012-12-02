@@ -59,23 +59,32 @@ public class PostgreSqlService implements DatabaseService {
 
   @Override
   public Student getStudentById(int id) throws SQLException {
-    ResultSet result = getNonEmptyResult("SELECT * FROM uczniowie WHERE id = " + id);
-    return new Student(id, result.getString("imie"), result.getString("nazwisko"), result.getString("pesel"));
+    return studentFrom(fetchSingleResult("SELECT * FROM uczniowie WHERE id = " + id));
+  }
+
+  private Student studentFrom(ResultSet result) throws SQLException {
+    return new Student(result.getInt("id"), result.getString("imie"), result.getString("nazwisko"), result.getString("pesel"));
   }
 
   @Override
   public Course getCourseById(int id) throws SQLException {
-    ResultSet result = getNonEmptyResult("SELECT * FROM przedmioty WHERE id = " + id);
-    return new Course(id, result.getString("nazwa"), result.getString("opis"), result.getInt("id_nauczyciela"));
+    return courseFrom(fetchSingleResult("SELECT * FROM przedmioty WHERE id = " + id));
+  }
+
+  private Course courseFrom(ResultSet result) throws SQLException {
+    return new Course(result.getInt("id"), result.getString("nazwa"), result.getString("opis"), result.getInt("id_nauczyciela"));
   }
 
   @Override
   public Teacher getTeacherById(int id) throws SQLException {
-    ResultSet result = getNonEmptyResult("SELECT * FROM nauczyciele WHERE id = " + id);
-    return new Teacher(id, result.getString("imie"), result.getString("nazwisko"));
+    return teacherFrom(fetchSingleResult("SELECT * FROM nauczyciele WHERE id = " + id));
   }
 
-  private ResultSet getNonEmptyResult(String sql) throws SQLException {
+  private Teacher teacherFrom(ResultSet result) throws SQLException {
+    return new Teacher(result.getInt("id"), result.getString("imie"), result.getString("nazwisko"));
+  }
+
+  private ResultSet fetchSingleResult(String sql) throws SQLException {
     ResultSet result = connector.execute(sql);
     if (!result.next()) {
       throw new SQLException("Empty result returned for SQL: " + sql);

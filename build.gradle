@@ -20,6 +20,7 @@ configurations {
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.1'
     compile 'postgresql:postgresql:9.1-901.jdbc4'
+    compile 'commons-logging:commons-logging:1.1.1'
     
     testCompile 'org.mockito:mockito-all:1.9.0'
     testCompile 'org.easytesting:fest-assert:1.4'
