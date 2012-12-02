@@ -6,16 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static pl.wroc.uni.ii.eliga.db.TestObjects.teacher;
 
 public class PostgreSqlConnectorTest extends SqlBasicTest {
   @Test
   public void interactsWithDatabase() throws SQLException {
-    connector.executeUpdate("INSERT INTO nauczyciele VALUES (DEFAULT, 'Jan', 'Kowalsky')");
+    insertTeacher();
     ResultSet result = connector.execute("SELECT * FROM nauczyciele");
 
     assertThat(result.next()).isTrue();
-    assertThat(result.getString(2)).isEqualTo("Jan");
-    assertThat(result.getString(3)).isEqualTo("Kowalsky");
+    assertThat(result.getInt(1)).isEqualTo(teacher().getId());
+    assertThat(result.getString(2)).isEqualTo(teacher().getName());
+    assertThat(result.getString(3)).isEqualTo(teacher().getSurname());
     assertThat(result.next()).isFalse();
   }
 }
