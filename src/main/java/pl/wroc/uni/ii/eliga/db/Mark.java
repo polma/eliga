@@ -13,17 +13,14 @@ public class Mark {
   private final char sign;
   private final Date date;
   private final int studentId;
-  private final int teacherId;
   private final int courseId;
 
-  public Mark(int id, int value, char sign, Date date, int studentId,
-      int teacherId, int courseId) {
+  public Mark(int id, int value, char sign, Date date, int studentId, int courseId) {
     this.id = id;
     this.value = value;
     this.sign = sign;
     this.date = date;
     this.studentId = studentId;
-    this.teacherId = teacherId;
     this.courseId = courseId;
   }
 
@@ -45,10 +42,6 @@ public class Mark {
 
   public int getStudentId() {
     return studentId;
-  }
-
-  public int getTeacherId() {
-    return teacherId;
   }
 
   public int getCourseId() {

@@ -34,11 +34,9 @@ create table IF NOT EXISTS oceny(
 
   id_ucznia integer,
   id_przedmiotu integer,
-  id_nauczyciela integer,
 
   FOREIGN KEY (id_ucznia) REFERENCES uczniowie(id),
-  FOREIGN KEY (id_przedmiotu) REFERENCES przedmioty(id),
-  FOREIGN KEY (id_nauczyciela) REFERENCES nauczyciele(id)
+  FOREIGN KEY (id_przedmiotu) REFERENCES przedmioty(id)
 );
 
 create table IF NOT EXISTS uwagi(

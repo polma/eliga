@@ -23,7 +23,7 @@ public class PostgreSqlService implements DatabaseService {
     List<Mark> marks = new ArrayList<Mark>();
     while (result.next()) {
       marks.add(new Mark(result.getInt("id"), result.getInt("wartosc"), result.getString("znak").charAt(0), result.getDate("data"),
-          result.getInt("id_ucznia"), result.getInt("id_nauczyciela"), result.getInt("id_przedmiotu")));
+          result.getInt("id_ucznia"), result.getInt("id_przedmiotu")));
     }
 
     return marks;

@@ -39,8 +39,8 @@ public class PostgreSqlServiceTest extends SqlBasicTest {
   }
 
   private void insertMark(Mark mark) throws SQLException {
-    connector.executeUpdate(format("INSERT INTO oceny VALUES (%d, %d, '%s', '%s', %s, %s, %s)",
-        mark.getId(), mark.getValue(), mark.getSign(), mark.getDate(), mark.getStudentId(), mark.getCourseId(), mark.getTeacherId()));
+    connector.executeUpdate(format("INSERT INTO oceny VALUES (%d, %d, '%s', '%s', %s, %s)",
+        mark.getId(), mark.getValue(), mark.getSign(), mark.getDate(), mark.getStudentId(), mark.getCourseId()));
   }
 
   private void insertParent() throws SQLException {
@@ -81,7 +81,7 @@ public class PostgreSqlServiceTest extends SqlBasicTest {
   }
 
   private Mark markWith(int id, int value) throws ParseException {
-    return new Mark(id, value, '-', date("12.12.2012"), student().getId(), teacher().getId(), course().getId());
+    return new Mark(id, value, '-', date("12.12.2012"), student().getId(), course().getId());
   }
 
   private Parent parent() {
