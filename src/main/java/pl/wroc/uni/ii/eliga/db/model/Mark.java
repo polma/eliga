@@ -1,4 +1,4 @@
-package pl.wroc.uni.ii.eliga.db;
+package pl.wroc.uni.ii.eliga.db.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 

@@ -1,22 +1,21 @@
 package pl.wroc.uni.ii.eliga.db;
 
 import org.junit.Before;
+import pl.wroc.uni.ii.eliga.db.model.Mark;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static pl.wroc.uni.ii.eliga.common.InjectionConfiguration.getInjector;
 import static pl.wroc.uni.ii.eliga.db.TestObjects.*;
 
 public class SqlBasicTest {
-  protected PostgreSqlConnector connector = new PostgreSqlConnector("localhost", 5433, "postgres", "postgres", "postgres");
-
-  protected List<String> allTables = asList("nauczyciele", "uczniowie", "uwagi", "oceny", "przedmioty");
+  protected DatabaseConnector connector = getInjector().getInstance(DatabaseConnector.class);
 
   @Before
   public void cleanUpDatabase() throws SQLException {
-    for (String table : allTables) {
+    for (String table : asList("nauczyciele", "uczniowie", "uwagi", "oceny", "przedmioty")) {
       connector.executeUpdate(format("TRUNCATE TABLE %s CASCADE", table));
     }
   }

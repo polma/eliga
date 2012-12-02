@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import static org.fest.assertions.Assertions.assertThat;
 import static pl.wroc.uni.ii.eliga.db.TestObjects.teacher;
 
-public class PostgreSqlConnectorTest extends SqlBasicTest {
+public class DatabaseConnectorTest extends SqlBasicTest {
   @Test
   public void interactsWithDatabase() throws SQLException {
     insertTeacher();

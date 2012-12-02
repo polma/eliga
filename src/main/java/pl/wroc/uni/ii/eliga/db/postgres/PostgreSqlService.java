@@ -1,4 +1,10 @@
-package pl.wroc.uni.ii.eliga.db;
+package pl.wroc.uni.ii.eliga.db.postgres;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import pl.wroc.uni.ii.eliga.db.DatabaseConnector;
+import pl.wroc.uni.ii.eliga.db.DatabaseService;
+import pl.wroc.uni.ii.eliga.db.model.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Singleton
 public class PostgreSqlService implements DatabaseService {
-  private final PostgreSqlConnector connector;
-
-  public PostgreSqlService(PostgreSqlConnector connector) {
-    this.connector = connector;
-  }
+  @Inject
+  private DatabaseConnector connector;
 
   @Override
   public List<Mark> fetchNegativeMarksNewerThan(Date date) throws SQLException {

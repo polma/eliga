@@ -1,5 +1,7 @@
 package pl.wroc.uni.ii.eliga.mail;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -10,15 +12,12 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static pl.wroc.uni.ii.eliga.common.EligaSettings.MAIL_SEND_TIMEOUT_MILIS;
 import static pl.wroc.uni.ii.eliga.common.EligaSettings.MAX_MAIL_SEND_TRIALS;
 
+@Singleton
 public class MailSendingService {
   private final Log log = LogFactory.getLog(MailSendingService.class);
-
-  private final MailSender sender;
-  public MailSendingService(MailSender sender) {
-    this.sender = sender;
-  }
-
   private final ExecutorService executor = Executors.newCachedThreadPool();
+  @Inject
+  private MailSender sender;
 
   public void send(Mail mail) {
     executor.submit(new MailSenderWithRetries(mail));

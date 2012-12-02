@@ -1,6 +1,5 @@
 package pl.wroc.uni.ii.eliga.db;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -8,15 +7,11 @@ import java.util.Date;
 
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 import static org.fest.assertions.Assertions.assertThat;
+import static pl.wroc.uni.ii.eliga.common.InjectionConfiguration.getInjector;
 import static pl.wroc.uni.ii.eliga.db.TestObjects.*;
 
-public class PostgreSqlServiceTest extends SqlBasicTest {
-  private DatabaseService db;
-
-  @Before
-  public void setUp() {
-    db = new PostgreSqlService(connector);
-  }
+public class DatabaseServiceTest extends SqlBasicTest {
+  private DatabaseService db = getInjector().getInstance(DatabaseService.class);
 
   @Test
   public void retrievesValidStudentFromDb() throws SQLException {

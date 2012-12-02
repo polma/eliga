@@ -1,5 +1,7 @@
 package pl.wroc.uni.ii.eliga.db;
 
+import pl.wroc.uni.ii.eliga.db.model.*;
+
 import java.text.ParseException;
 import java.util.Date;
 

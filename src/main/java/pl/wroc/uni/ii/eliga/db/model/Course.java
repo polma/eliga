@@ -1,19 +1,19 @@
-package pl.wroc.uni.ii.eliga.db;
+package pl.wroc.uni.ii.eliga.db.model;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
-public class Student {
+public class Course {
   private final int id;
   private final String name;
-  private final String surname;
-  private final String pesel;
+  private final String desc;
+  private final int teacherId;
 
-  public Student(int id, String name, String surname, String pesel) {
+  public Course(int id, String name, String desc, int teacherId) {
     this.id = id;
     this.name = name;
-    this.surname = surname;
-    this.pesel = pesel;
+    this.desc = desc;
+    this.teacherId = teacherId;
   }
 
   public int getId() {
@@ -24,12 +24,12 @@ public class Student {
     return name;
   }
 
-  public String getSurname() {
-    return surname;
+  public String getDesc() {
+    return desc;
   }
 
-  public String getPesel() {
-    return pesel;
+  public int getTeacherId() {
+    return teacherId;
   }
 
   @Override

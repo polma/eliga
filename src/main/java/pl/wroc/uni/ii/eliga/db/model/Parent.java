@@ -1,4 +1,4 @@
-package pl.wroc.uni.ii.eliga.db;
+package pl.wroc.uni.ii.eliga.db.model;
 
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;

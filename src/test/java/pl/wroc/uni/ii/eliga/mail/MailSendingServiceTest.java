@@ -1,8 +1,8 @@
 package pl.wroc.uni.ii.eliga.mail;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -15,13 +15,8 @@ public class MailSendingServiceTest {
   private MailSender sender;
   @Mock
   private Mail mail;
-
-  private MailSendingService mailService;
-
-  @Before
-  public void setUp() {
-    mailService = new MailSendingService(sender);
-  }
+  @InjectMocks
+  private MailSendingService mailService = new MailSendingService();
 
   @Test
   public void sendsScheduledMail() throws MailSendException {
