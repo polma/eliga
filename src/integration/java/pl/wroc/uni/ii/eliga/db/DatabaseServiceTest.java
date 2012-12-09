@@ -1,68 +1,86 @@
 package pl.wroc.uni.ii.eliga.db;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import org.hibernate.Session;
+import org.hibernate.exception.GenericJDBCException;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import pl.wroc.uni.ii.eliga.common.Transactional;
+import pl.wroc.uni.ii.eliga.db.model.*;
+import pl.wroc.uni.ii.eliga.test.util.GuiceJUnitRunner;
 
-import java.sql.SQLException;
-import java.util.Date;
+import java.util.List;
 
-import static org.apache.commons.lang3.time.DateUtils.addDays;
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
-import static pl.wroc.uni.ii.eliga.common.InjectionConfiguration.getInjector;
-import static pl.wroc.uni.ii.eliga.db.TestObjects.*;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.*;
 
-public class DatabaseServiceTest extends SqlBasicTest {
-  private DatabaseService db = getInjector().getInstance(DatabaseService.class);
+@RunWith(GuiceJUnitRunner.class)
+public class DatabaseServiceTest {
+  @Inject
+  Injector injector;
+  @Inject
+  DatabaseService databaseService;
 
-  @Test
-  public void retrievesValidStudentFromDb() throws SQLException {
-    insertStudent();
-
-    assertThat(db.getStudentById(student().getId())).isEqualTo(student());
+  @Before
+  @Transactional
+  public void cleanUp() {
+    for (Class clazz : asList(Course.class, Mark.class, Notice.class, Parent.class, Student.class, Teacher.class)) {
+      String tableName = clazz.getSimpleName();
+      getSession().createSQLQuery(format("TRUNCATE table %s CASCADE", tableName)).executeUpdate();
+    }
   }
 
   @Test
-  public void retrievesValidTeacherFromDb() throws SQLException {
-    insertTeacher();
+  @Transactional
+  public void fetchesUnansweredNegativeMarkOnly() {
+    insertAll();
 
-    assertThat(db.getTeacherById(teacher().getId())).isEqualTo(teacher());
+    List<Mark> marks = databaseService.fetchUnansweredNegativeMarks();
+    assertThat(marks).containsExactly(NEGATIVE_MARK_UNANSWERED);
   }
 
   @Test
-  public void retrievesValidCourseFromDb() throws SQLException {
-    insertCourse();
+  @Transactional
+  public void fetchesUnansweredNotices() {
+    insertAll();
 
-    assertThat(db.getCourseById(course().getId())).isEqualTo(course());
+    List<Notice> notices = databaseService.fetchUnansweredNotices();
+    assertThat(notices).containsExactly(NOTICE);
   }
 
-  @Test
-  public void retrievesValidParentFromDb() throws SQLException {
-    insertParent();
-
-    assertThat(db.getParentsFor(student())).containsExactly(parent());
+  @Transactional
+  @Test(expected = GenericJDBCException.class)
+  public void throwsAnExceptionForNotCapitalizedTeachersSurname() {
+    try {
+      databaseService.save(new Teacher("A", "b"));
+    } finally {
+      assertThat(selectAll(Teacher.class)).isEmpty();
+    }
   }
 
-  @Test
-  public void retrievesValidNoticeFromDb() throws SQLException {
-    insertNotice();
+  public void insertAll() {
+    databaseService.save(TEACHER);
+    databaseService.save(PARENT);
+    databaseService.save(STUDENT);
+    databaseService.save(NOTICE);
+    databaseService.save(COURSE);
+    databaseService.save(POSTIIVE_MARK);
+    databaseService.save(NEGATIVE_MARK_UNANSWERED);
+    databaseService.save(NEGATIVE_MARK_WITH_ANSWER);
 
-    assertThat(db.fetchNoticesNewerThan(dayBefore(notice().getDate()))).containsExactly(notice());
+    assertThat(selectAll(Notice.class)).isNotEmpty();
+    assertThat(selectAll(Mark.class)).hasSize(3);
   }
 
-  @Test
-  public void retrievesNegativeMarkFromDb() throws SQLException {
-    insertMark(negativeMark());
-
-    assertThat(db.fetchNegativeMarksNewerThan(dayBefore(negativeMark().getDate()))).containsExactly(negativeMark());
+  private List selectAll(Class clazz) {
+    return getSession().createCriteria(clazz).list();
   }
 
-  @Test
-  public void doNotRetrieveNonNegativeMark() throws SQLException {
-    insertMark(positiveMark());
-
-    assertThat(db.fetchNegativeMarksNewerThan(dayBefore(negativeMark().getDate()))).isEmpty();
-  }
-
-  private Date dayBefore(Date date) {
-    return addDays(date, -1);
+  private Session getSession() {
+    return injector.getInstance(Session.class);
   }
 }

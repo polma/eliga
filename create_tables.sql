@@ -1,69 +1,133 @@
 
---drop table rodzice;
---drop table uczniowie;
+    alter table Course 
+        drop constraint FK78A7CC3B936D145A;
 
-create table IF NOT EXISTS uczniowie(
-  id serial PRIMARY KEY,
-  imie varchar(30) NOT NULL,
-  nazwisko varchar(30) NOT NULL,
-  pesel varchar(20)
-);
+    alter table Mark 
+        drop constraint FK247AED9D76435C;
 
-create table IF NOT EXISTS nauczyciele(
-  id serial PRIMARY KEY,
-  imie varchar(30),
-  nazwisko varchar(30)
-);
+    alter table Mark 
+        drop constraint FK247AEDD6A4B5FA;
 
-create table IF NOT EXISTS przedmioty(
-  id serial primary key,
+    alter table Notice 
+        drop constraint FK8B6C82F89D76435C;
 
-  nazwa varchar(50),
-  opis text,
+    alter table Notice 
+        drop constraint FK8B6C82F8936D145A;
 
-  id_nauczyciela integer,
-  FOREIGN KEY (id_nauczyciela) REFERENCES nauczyciele(id)
-);
+    alter table Student_Parent 
+        drop constraint FK53B7536E9D76435C;
 
-create table IF NOT EXISTS oceny(
-  id serial PRIMARY KEY,
-  
-  wartosc integer,
-  znak char,
-  data timestamp,
+    alter table Student_Parent 
+        drop constraint FK53B7536E862662DB;
 
-  id_ucznia integer,
-  id_przedmiotu integer,
+    drop table if exists Course cascade;
 
-  FOREIGN KEY (id_ucznia) REFERENCES uczniowie(id),
-  FOREIGN KEY (id_przedmiotu) REFERENCES przedmioty(id)
-);
+    drop table if exists Mark cascade;
 
-create table IF NOT EXISTS uwagi(
+    drop table if exists Notice cascade;
 
-  id serial PRIMARY KEY,
-  
-  tresc text,
-  data timestamp,
-  
-  id_ucznia integer,
-  id_nauczyciela integer,
+    drop table if exists Parent cascade;
 
-  FOREIGN KEY (id_ucznia) REFERENCES uczniowie(id),
-  FOREIGN KEY (id_nauczyciela) REFERENCES nauczyciele(id)
+    drop table if exists Student cascade;
 
-);
+    drop table if exists Student_Parent cascade;
 
-create table IF NOT EXISTS rodzice(
-  id serial PRIMARY KEY,
-  imie varchar(30) NOT NULL,
-  nazwisko varchar(30) NOT NULL,
+    drop table if exists Teacher cascade;
 
-  email varchar(50),
-  tel varchar(50),
+    drop sequence hibernate_sequence;
 
-  id_ucznia integer,
+    create table Course (
+        id int4 not null,
+        description varchar(255),
+        name varchar(255) not null,
+        timer timestamp,
+        teacher_id int4 not null,
+        primary key (id)
+    );
 
-  FOREIGN KEY (id_ucznia) REFERENCES uczniowie(id)
-);
+    create table Mark (
+        id int4 not null,
+        date date not null,
+        mailSent boolean not null,
+        number int4 not null,
+        sign char(1) not null,
+        course_id int4 not null,
+        student_pesel varchar(11) not null,
+        primary key (id)
+    );
 
+    create table Notice (
+        id int4 not null,
+        date date not null,
+        description varchar(255) not null,
+        mailSent boolean not null,
+        student_pesel varchar(11) not null,
+        teacher_id int4 not null,
+        primary key (id)
+    );
+
+    create table Parent (
+        id int4 not null,
+        email varchar(255) not null,
+        name varchar(255) not null,
+        phone varchar(255),
+        surname varchar(255) not null,
+        primary key (id)
+    );
+
+    create table Student (
+        pesel varchar(11) not null,
+        name varchar(255) not null,
+        surname varchar(255) not null,
+        primary key (pesel)
+    );
+
+    create table Student_Parent (
+        Student_pesel varchar(11) not null,
+        parents_id int4 not null,
+        primary key (Student_pesel, parents_id)
+    );
+
+    create table Teacher (
+        id int4 not null,
+        name varchar(255) not null,
+        surname varchar(255) not null,
+        primary key (id)
+    );
+
+    alter table Course 
+        add constraint FK78A7CC3B936D145A 
+        foreign key (teacher_id) 
+        references Teacher;
+
+    alter table Mark 
+        add constraint FK247AED9D76435C 
+        foreign key (student_pesel) 
+        references Student;
+
+    alter table Mark 
+        add constraint FK247AEDD6A4B5FA 
+        foreign key (course_id) 
+        references Course;
+
+    alter table Notice 
+        add constraint FK8B6C82F89D76435C 
+        foreign key (student_pesel) 
+        references Student;
+
+    alter table Notice 
+        add constraint FK8B6C82F8936D145A 
+        foreign key (teacher_id) 
+        references Teacher;
+
+    alter table Student_Parent 
+        add constraint FK53B7536E9D76435C 
+        foreign key (Student_pesel) 
+        references Student;
+
+    alter table Student_Parent 
+        add constraint FK53B7536E862662DB 
+        foreign key (parents_id) 
+        references Parent;
+
+    create sequence hibernate_sequence;

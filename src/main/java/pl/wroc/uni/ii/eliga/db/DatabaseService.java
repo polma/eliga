@@ -1,21 +1,14 @@
 package pl.wroc.uni.ii.eliga.db;
 
-import pl.wroc.uni.ii.eliga.db.model.*;
+import pl.wroc.uni.ii.eliga.db.model.Mark;
+import pl.wroc.uni.ii.eliga.db.model.Notice;
 
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public interface DatabaseService {
-  List<Mark> fetchNegativeMarksNewerThan(Date date) throws SQLException;
+  List<Mark> fetchUnansweredNegativeMarks();
 
-  List<Notice> fetchNoticesNewerThan(Date date) throws SQLException;
+  List<Notice> fetchUnansweredNotices();
 
-  List<Parent> getParentsFor(Student student) throws SQLException;
-
-  Student getStudentById(int id) throws SQLException;
-
-  Course getCourseById(int id) throws SQLException;
-
-  Teacher getTeacherById(int id) throws SQLException;
+  void save(Object object);
 }

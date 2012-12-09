@@ -1,19 +1,35 @@
 package pl.wroc.uni.ii.eliga.db.model;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
+@Entity
 public class Course {
-  private final int id;
-  private final String name;
-  private final String desc;
-  private final int teacherId;
 
-  public Course(int id, String name, String desc, int teacherId) {
-    this.id = id;
+  @Id
+  @GeneratedValue
+  private int id;
+
+  @Column(nullable = false)
+  private String name;
+
+  private String description;
+
+  Timestamp timer;
+
+  @ManyToOne(optional = false)
+  private Teacher teacher;
+
+  public Course() {
+  }
+
+  public Course(String name, String description, Teacher teacher) {
     this.name = name;
-    this.desc = desc;
-    this.teacherId = teacherId;
+    this.teacher = teacher;
+    this.description = description;
   }
 
   public int getId() {
@@ -24,12 +40,12 @@ public class Course {
     return name;
   }
 
-  public String getDesc() {
-    return desc;
+  public String getDescription() {
+    return description;
   }
 
-  public int getTeacherId() {
-    return teacherId;
+  public Teacher getTeacher() {
+    return teacher;
   }
 
   @Override

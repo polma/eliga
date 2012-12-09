@@ -2,34 +2,60 @@ package pl.wroc.uni.ii.eliga.db.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.TemporalType.DATE;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
+@Entity
 public class Mark {
-  private final int id;
-  private final int value;
-  private final char sign;
-  private final Date date;
-  private final int studentId;
-  private final int courseId;
+  @Id
+  @GeneratedValue
+  private int id;
 
-  public Mark(int id, int value, char sign, Date date, int studentId, int courseId) {
-    this.id = id;
-    this.value = value;
+  @Column(nullable = false)
+  private int number;
+
+  private char sign;
+
+  @Temporal(value = DATE)
+  @Column(nullable = false)
+  private Date date;
+
+  @ManyToOne(optional = false)
+  private Student student;
+
+  @ManyToOne(optional = false)
+  private Course course;
+
+  @Column(nullable = false)
+  private boolean mailSent;
+
+  public Mark() {
+  }
+
+  public Mark(int number, char sign, Date date, Student student, Course course) {
+    this.number = number;
     this.sign = sign;
     this.date = date;
-    this.studentId = studentId;
-    this.courseId = courseId;
+    this.student = student;
+    this.course = course;
+    this.mailSent = false;
+  }
+
+  public Mark(int number, char sign, Date date, Student student, Course course, boolean sent) {
+    this(number, sign, date, student, course);
+    this.mailSent = sent;
   }
 
   public int getId() {
     return id;
   }
 
-  public int getValue() {
-    return value;
+  public int getNumber() {
+    return number;
   }
 
   public char getSign() {
@@ -40,12 +66,12 @@ public class Mark {
     return date;
   }
 
-  public int getStudentId() {
-    return studentId;
+  public Student getStudent() {
+    return student;
   }
 
-  public int getCourseId() {
-    return courseId;
+  public Course getCourse() {
+    return course;
   }
 
   @Override

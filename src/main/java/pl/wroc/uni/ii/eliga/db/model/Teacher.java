@@ -1,15 +1,29 @@
 package pl.wroc.uni.ii.eliga.db.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
+@Entity
 public class Teacher {
-  private final int id;
-  private final String name;
-  private final String surname;
+  @Id
+  @GeneratedValue
+  private int id;
 
-  public Teacher(int id, String name, String surname) {
-    this.id = id;
+  @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
+  private String surname;
+
+  public Teacher() {
+  }
+
+  public Teacher(String name, String surname) {
     this.name = name;
     this.surname = surname;
   }

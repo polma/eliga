@@ -1,24 +1,39 @@
 package pl.wroc.uni.ii.eliga.db.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
+@Entity
 public class Parent {
-  private final int id;
-  private final String name;
-  private final String surname;
-  private final String email;
-  private final String phone;
-  private final int studentId;
+  @Id
+  @GeneratedValue
+  private int id;
 
-  public Parent(int id, String name, String surname, String email,
-      String phone, int studentId) {
-    this.id = id;
+  @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
+  private String surname;
+
+  @Column(nullable = false)
+  private String email;
+
+  private String phone;
+
+  public Parent() {
+  }
+
+  public Parent(String name, String surname, String email,
+      String phone) {
     this.name = name;
     this.surname = surname;
     this.email = email;
     this.phone = phone;
-    this.studentId = studentId;
   }
 
   public int getId() {
@@ -39,10 +54,6 @@ public class Parent {
 
   public String getPhone() {
     return phone;
-  }
-
-  public int getStudentId() {
-    return studentId;
   }
 
   @Override

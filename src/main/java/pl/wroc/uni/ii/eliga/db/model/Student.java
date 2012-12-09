@@ -1,23 +1,41 @@
 package pl.wroc.uni.ii.eliga.db.model;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.Set;
+
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 
+@Entity
 public class Student {
-  private final int id;
-  private final String name;
-  private final String surname;
-  private final String pesel;
+  public static final int PESEL_NUMBER_LENGTH = 11;
 
-  public Student(int id, String name, String surname, String pesel) {
-    this.id = id;
+  @Id
+  @Column(length = PESEL_NUMBER_LENGTH)
+  private String pesel;
+
+  @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
+  private String surname;
+
+  @ManyToMany
+  private Set<Parent> parents;
+
+  public Student() {
+  }
+
+  public Student(String name, String surname, String pesel, Set<Parent> parents) {
     this.name = name;
     this.surname = surname;
     this.pesel = pesel;
-  }
-
-  public int getId() {
-    return id;
+    this.parents = parents;
   }
 
   public String getName() {
@@ -40,5 +58,10 @@ public class Student {
   @Override
   public int hashCode() {
     return reflectionHashCode(this);
+  }
+
+  @Override
+  public String toString() {
+    return ReflectionToStringBuilder.toString(this);
   }
 }
