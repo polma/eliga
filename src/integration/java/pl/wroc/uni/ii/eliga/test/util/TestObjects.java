@@ -12,7 +12,7 @@ import static org.apache.commons.lang3.time.DateUtils.parseDate;
 public class TestObjects {
   public static final Date TEST_DATE = date("12.12.2012");
   public static final Parent PARENT = new Parent("jan", "kowalsky", "mail@mail.com", "123");
-  public static final Student STUDENT = new Student("Adam", "Testowy", "95110411995", new HashSet<>(asList(PARENT)));
+  public static final Student STUDENT = new Student("Adam", "Testowy", "95110411995", new HashSet<Parent>(asList(PARENT)));
   public static final Teacher TEACHER = new Teacher("Nauczyciel", "Testowy");
   public static final Notice NOTICE = new Notice("Naganne zachowanie", TEST_DATE, STUDENT, TEACHER);
   public static final Course COURSE = new Course("algebra", "opis", TEACHER);

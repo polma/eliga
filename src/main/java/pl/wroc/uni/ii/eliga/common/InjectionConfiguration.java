@@ -21,7 +21,7 @@ import static org.hibernate.cfg.AvailableSettings.*;
 import static pl.wroc.uni.ii.eliga.common.EligaInjector.getInstance;
 
 public class InjectionConfiguration extends AbstractModule {
-  private static ThreadLocal<Session> threadLocalSession = new ThreadLocal<>();
+  private static ThreadLocal<Session> threadLocalSession = new ThreadLocal<Session>();
 
   @Override
   protected void configure() {
@@ -81,8 +81,7 @@ public class InjectionConfiguration extends AbstractModule {
       } catch (Throwable t) {
         transaction.rollback();
         throw t;
-      }
-      finally {
+      } finally {
         session.close();
       }
     }
