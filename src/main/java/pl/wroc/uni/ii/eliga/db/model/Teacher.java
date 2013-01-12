@@ -49,4 +49,11 @@ public class Teacher {
   public int hashCode() {
     return reflectionHashCode(this);
   }
+
+    @Override
+    public String toString() {
+        return name + " " + surname;
+    }
+  
+  
 }
