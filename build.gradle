@@ -12,8 +12,8 @@ sourceSets {
     }
 
     acceptance {
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
+        compileClasspath += main.output + test.output + integration.output
+        runtimeClasspath += main.output + test.output + integration.output
     }
 }
 
