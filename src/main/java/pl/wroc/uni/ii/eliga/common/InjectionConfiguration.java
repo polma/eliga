@@ -13,11 +13,22 @@ import org.hibernate.dialect.PostgreSQL82Dialect;
 import org.postgresql.Driver;
 import pl.wroc.uni.ii.eliga.db.DatabaseService;
 import pl.wroc.uni.ii.eliga.db.hibernate.HibernateDatabaseService;
-import pl.wroc.uni.ii.eliga.db.model.*;
+import pl.wroc.uni.ii.eliga.db.model.Course;
+import pl.wroc.uni.ii.eliga.db.model.Mark;
+import pl.wroc.uni.ii.eliga.db.model.Notice;
+import pl.wroc.uni.ii.eliga.db.model.Parent;
+import pl.wroc.uni.ii.eliga.db.model.Student;
+import pl.wroc.uni.ii.eliga.db.model.Teacher;
+import pl.wroc.uni.ii.eliga.mail.GmailSender;
+import pl.wroc.uni.ii.eliga.mail.MailSender;
 
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
-import static org.hibernate.cfg.AvailableSettings.*;
+import static org.hibernate.cfg.AvailableSettings.DIALECT;
+import static org.hibernate.cfg.AvailableSettings.DRIVER;
+import static org.hibernate.cfg.AvailableSettings.PASS;
+import static org.hibernate.cfg.AvailableSettings.URL;
+import static org.hibernate.cfg.AvailableSettings.USER;
 import static pl.wroc.uni.ii.eliga.common.EligaInjector.getInstance;
 
 public class InjectionConfiguration extends AbstractModule {
@@ -27,6 +38,7 @@ public class InjectionConfiguration extends AbstractModule {
   protected void configure() {
     bindInterceptor(any(), annotatedWith(Transactional.class), new TransactionalInterceptor());
     bind(DatabaseService.class).to(HibernateDatabaseService.class);
+    bind(MailSender.class).to(GmailSender.class);
   }
 
   @Provides

@@ -50,6 +50,10 @@ public class Student {
     return pesel;
   }
 
+  public Set<Parent> getParents() {
+    return parents;
+  }
+
   @Override
   public boolean equals(Object o) {
     return reflectionEquals(this, o);

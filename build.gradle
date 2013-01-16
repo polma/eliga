@@ -10,11 +10,24 @@ sourceSets {
         compileClasspath += main.output + test.output
         runtimeClasspath += main.output + test.output
     }
+
+    acceptance {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
 }
 
 configurations {
     integrationCompile.extendsFrom(testCompile)
     integrationRuntime.extendsFrom(testRuntime)
+
+    acceptanceCompile.extendsFrom(testCompile)
+    acceptanceRuntime.extendsFrom(testRuntime)
+}
+
+task integration(type: Test) {
+    testClassesDir = sourceSets.integration.output.classesDir
+    classpath = sourceSets.integration.runtimeClasspath
 }
 
 dependencies {
@@ -29,6 +42,6 @@ dependencies {
     testCompile 'org.easytesting:fest-assert:1.4'
     testCompile 'junit:junit:4.10'
     testCompile 'org.easytesting:fest-swing:1.2.1'
-	testCompile 'org.easytesting:fest-swing-testng:1.2.1'
+    testCompile 'org.easytesting:fest-swing-testng:1.2.1'
 
 }

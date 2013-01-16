@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="fest-swing-testng-1.2.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/org.easytesting/fest-swing-testng/1.2.1/jar/9dd9daa8a8f432222be2db47cb54a9340661c3f0/fest-swing-testng-1.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/org.easytesting/fest-swing-testng/1.2.1/source/439fb7b63b01f44b43ef5d332bd847478678661b/fest-swing-testng-1.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,8 +1,6 @@
 package pl.wroc.uni.ii.eliga.service;
 
-import java.util.Date;
-import java.util.List;
-
+import com.google.inject.Inject;
 import pl.wroc.uni.ii.eliga.db.hibernate.HibernateDatabaseService;
 import pl.wroc.uni.ii.eliga.db.model.Notice;
 import pl.wroc.uni.ii.eliga.db.model.Student;
@@ -11,7 +9,8 @@ import pl.wroc.uni.ii.eliga.mail.GmailSender;
 import pl.wroc.uni.ii.eliga.mail.Mail;
 import pl.wroc.uni.ii.eliga.mail.MailSendException;
 
-import com.google.inject.Inject;
+import java.util.Date;
+import java.util.List;
 
 public class NoticeAdderBean {
 	
@@ -82,7 +81,7 @@ public class NoticeAdderBean {
 	}
 
 	private Mail createMail() {
-		String addres = dbService.findMailAdresByStudentPesel(studentPesel);
+		String addres = dbService.findMailAdresByStudentPesel(studentPesel).get(0);
 		return new Mail(noticeDescription, "Notice", addres);
 	}
 

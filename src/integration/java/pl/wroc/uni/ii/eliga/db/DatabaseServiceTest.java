@@ -62,6 +62,16 @@ public class DatabaseServiceTest {
     }
   }
 
+  @Test
+  @Transactional
+  public void fetchesParentMailsByStudentPesel() {
+    insertAll();
+
+    List<String> mails = databaseService.findMailAdresByStudentPesel(STUDENT.getPesel());
+
+    assertThat(mails).containsOnly(PARENT.getEmail());
+  }
+
   public void insertAll() {
     databaseService.save(TEACHER);
     databaseService.save(PARENT);

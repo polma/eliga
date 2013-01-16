@@ -1,19 +1,19 @@
 package pl.wroc.uni.ii.eliga.db.hibernate;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-
-import pl.wroc.uni.ii.eliga.db.DatabaseService;
-import pl.wroc.uni.ii.eliga.db.model.Mark;
-import pl.wroc.uni.ii.eliga.db.model.Notice;
-import pl.wroc.uni.ii.eliga.db.model.Student;
-import pl.wroc.uni.ii.eliga.db.model.Teacher;
-
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import pl.wroc.uni.ii.eliga.db.DatabaseService;
+import pl.wroc.uni.ii.eliga.db.model.Mark;
+import pl.wroc.uni.ii.eliga.db.model.Notice;
+import pl.wroc.uni.ii.eliga.db.model.Parent;
+import pl.wroc.uni.ii.eliga.db.model.Student;
+import pl.wroc.uni.ii.eliga.db.model.Teacher;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @Singleton
 public class HibernateDatabaseService implements DatabaseService {
@@ -51,8 +51,13 @@ public class HibernateDatabaseService implements DatabaseService {
         .add(Restrictions.eq("pesel", pesel)).uniqueResult();
   }
 
-  public String findMailAdresByStudentPesel(String studentPesel) {
-	  return "dawid.ryznar@yahoo.com"; 
+  public List<String> findMailAdresByStudentPesel(String studentPesel) {
+	  Student student = findStudentByPesel(studentPesel);
+    List<String> parentMails = new LinkedList<String>();
+    for(Parent parent : student.getParents()) {
+      parentMails.add(parent.getEmail());
+    }
+    return parentMails;
   }
   
   @Override
