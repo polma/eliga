@@ -6,6 +6,7 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.Test;
 
+import pl.wroc.uni.ii.eliga.common.EligaInjector;
 import pl.wroc.uni.ii.eliga.ui.NoticeAdder;
 
 public class GuiTest {
@@ -19,7 +20,7 @@ public class GuiTest {
 	public void setUp() {
 		NoticeAdder frame = GuiActionRunner.execute(new GuiQuery<NoticeAdder>() {
 			protected NoticeAdder executeInEDT() {
-				return new NoticeAdder();
+				return EligaInjector.getInstance(NoticeAdder.class);
 			}
 		});
 		window = new FrameFixture(frame);

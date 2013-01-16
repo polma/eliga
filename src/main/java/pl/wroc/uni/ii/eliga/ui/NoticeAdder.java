@@ -1,5 +1,6 @@
 package pl.wroc.uni.ii.eliga.ui;
 
+import pl.wroc.uni.ii.eliga.common.EligaInjector;
 import pl.wroc.uni.ii.eliga.db.model.Teacher;
 import pl.wroc.uni.ii.eliga.service.NoticeAdderBean;
 
@@ -53,13 +54,13 @@ public class NoticeAdder extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Treœæ");
+        jLabel2.setText("TreÅ›Ä‡");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jCheckBox1.setText("Wyœlij e-mail");
+        jCheckBox1.setText("WyÅ›lij e-mail");
 
         jLabel3.setText("Pesel ucznia");
 
@@ -168,7 +169,7 @@ public class NoticeAdder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NoticeAdder().setVisible(true);
+                EligaInjector.getInstance(NoticeAdder.class).setVisible(true);
             }
         });
     }

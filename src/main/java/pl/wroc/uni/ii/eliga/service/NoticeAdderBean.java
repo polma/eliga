@@ -1,6 +1,9 @@
 package pl.wroc.uni.ii.eliga.service;
 
-import com.google.inject.Inject;
+import java.util.Date;
+import java.util.List;
+
+import pl.wroc.uni.ii.eliga.common.Transactional;
 import pl.wroc.uni.ii.eliga.db.hibernate.HibernateDatabaseService;
 import pl.wroc.uni.ii.eliga.db.model.Notice;
 import pl.wroc.uni.ii.eliga.db.model.Student;
@@ -9,8 +12,7 @@ import pl.wroc.uni.ii.eliga.mail.GmailSender;
 import pl.wroc.uni.ii.eliga.mail.Mail;
 import pl.wroc.uni.ii.eliga.mail.MailSendException;
 
-import java.util.Date;
-import java.util.List;
+import com.google.inject.Inject;
 
 public class NoticeAdderBean {
 	
@@ -61,6 +63,7 @@ public class NoticeAdderBean {
 		this.teacher = teacher;
 	}
 
+	@Transactional
 	public void addNotice()  {
 		Notice notice = crateNotice();
 		dbService.save(notice);
@@ -85,6 +88,7 @@ public class NoticeAdderBean {
 		return new Mail(noticeDescription, "Notice", addres);
 	}
 
+	@Transactional
     public List<Teacher> getTeachers() {
         return dbService.fetchTeachers();
     }
