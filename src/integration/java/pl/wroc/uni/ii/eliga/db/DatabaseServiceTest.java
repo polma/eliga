@@ -1,22 +1,36 @@
 package pl.wroc.uni.ii.eliga.db;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
+import static org.fest.assertions.Assertions.assertThat;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.COURSE;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.NEGATIVE_MARK_UNANSWERED;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.NEGATIVE_MARK_WITH_ANSWER;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.NOTICE;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.PARENT;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.POSTIIVE_MARK;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.STUDENT;
+import static pl.wroc.uni.ii.eliga.test.util.TestObjects.TEACHER;
+
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.exception.GenericJDBCException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import pl.wroc.uni.ii.eliga.common.Transactional;
-import pl.wroc.uni.ii.eliga.db.model.*;
+import pl.wroc.uni.ii.eliga.db.model.Course;
+import pl.wroc.uni.ii.eliga.db.model.Mark;
+import pl.wroc.uni.ii.eliga.db.model.Notice;
+import pl.wroc.uni.ii.eliga.db.model.Parent;
+import pl.wroc.uni.ii.eliga.db.model.Student;
+import pl.wroc.uni.ii.eliga.db.model.Teacher;
 import pl.wroc.uni.ii.eliga.test.util.GuiceJUnitRunner;
 
-import java.util.List;
-
-import static java.lang.String.format;
-import static java.util.Arrays.asList;
-import static org.fest.assertions.Assertions.assertThat;
-import static pl.wroc.uni.ii.eliga.test.util.TestObjects.*;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 @RunWith(GuiceJUnitRunner.class)
 public class DatabaseServiceTest {
@@ -72,6 +86,7 @@ public class DatabaseServiceTest {
     assertThat(mails).containsOnly(PARENT.getEmail());
   }
 
+  @Transactional
   public void insertAll() {
     databaseService.save(TEACHER);
     databaseService.save(PARENT);

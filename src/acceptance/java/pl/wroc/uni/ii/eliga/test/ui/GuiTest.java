@@ -7,6 +7,8 @@ import org.fest.swing.fixture.FrameFixture;
 import org.junit.Test;
 
 import pl.wroc.uni.ii.eliga.common.EligaInjector;
+import pl.wroc.uni.ii.eliga.db.DatabaseServiceTest;
+import pl.wroc.uni.ii.eliga.test.util.TestObjects;
 import pl.wroc.uni.ii.eliga.ui.NoticeAdder;
 
 public class GuiTest {
@@ -15,6 +17,7 @@ public class GuiTest {
 
 	public void setUpOnce() {
 		FailOnThreadViolationRepaintManager.install();
+		
 	}
 
 	public void setUp() {
@@ -32,15 +35,18 @@ public class GuiTest {
 	}
 
 	@Test
-	public void shouldCopyTextInLabelWhenClickingButton() {
+	public void shouldCopyTextInLabelWhenClickingButton() throws InterruptedException {
+		DatabaseServiceTest service = EligaInjector.getInstance(DatabaseServiceTest.class);
+		service.cleanUp();
+		service.insertAll();
 		setUpOnce();
 		setUp();
 		
 		window.checkBox("jCheckBox1").check();
 		window.textBox("jTextArea1").setText("Some notice");
-		window.textBox("jTextField1").enterText("89114499551");
+		window.textBox("jTextField1").enterText(TestObjects.STUDENT.getPesel());
 		window.button("jButton1").click();
-		window.comboBox("jComboBox1").selectItem(1);
+		window.comboBox("jComboBox1").selectItem(0);
 		
 		tearDown();
 	}
